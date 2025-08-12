@@ -31,4 +31,6 @@
 #include "common.h"
 
 int main(int argc, char** argv){
+	int st = arg_parse(argc, argv);
+	if(st != -1) return st;
 }

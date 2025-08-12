@@ -28,17 +28,4 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __COMMON_H__
-#define __COMMON_H__
-
-#include "machdep.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
-
-/* arg.c */
-int arg_parse(int argc, char** argv);
-
-#endif
+#include "common.h"

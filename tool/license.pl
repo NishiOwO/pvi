@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# $Id$
 if(@ARGV < 1){
 	die;
 }

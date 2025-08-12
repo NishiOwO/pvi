@@ -28,17 +28,14 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __COMMON_H__
-#define __COMMON_H__
+#include "common.h"
 
-#include "machdep.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
-
-/* arg.c */
-int arg_parse(int argc, char** argv);
-
-#endif
+int arg_parse(int argc, char** argv){
+	int i;
+	for(i = 1; i < argc; i++){
+		if(argv[i][0] == '-'){
+		}else{
+		}
+	}
+	return -1;
+}
