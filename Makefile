@@ -8,9 +8,9 @@ LIBS = -lpcre
 
 EXEC =
 
-OBJS = src/main.o src/arg.o
+OBJS = src/main.o src/arg.o src/array.o
 
-.PHONY: all clean
+.PHONY: all pcre clean
 .SUFFIXES: .c .o
 
 all: pvi$(EXEC)
@@ -20,6 +20,9 @@ pvi$(EXEC): $(OBJS)
 
 .c.o:
 	$(CC) $(CFLAGS) -c -o $@ $<
+
+pcre:
+	cd pcre && $(MAKE)
 
 clean:
 	rm -f pvi.exe pvi src/*.o
