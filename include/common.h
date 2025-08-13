@@ -37,8 +37,19 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
+#include <stddef.h>
 
 /* arg.c */
 int arg_parse(int argc, char** argv);
+
+/* array.c */
+void* array_grow(void* data, size_t size);
+void array_free_body(void* data);
+size_t array_length(void* data);
+void* array_delete_body(void* data, size_t size, int index);
+
+#define array_put(arr,elem) {(arr) = array_grow((arr), sizeof(*(arr)));(arr)[array_length((arr)) - 1] = (elem);}
+#define array_free(arr) {array_free_body((arr));(arr) = NULL;}
+#define array_delete(arr,elem) {(arr) = array_delete_body((arr), sizeof(*(arr)), (elem));}
 
 #endif

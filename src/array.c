@@ -29,3 +29,55 @@
  */
 
 #include "common.h"
+
+void* array_grow(void* data, size_t size){
+	if(data == NULL){
+		size_t* r = malloc(sizeof(size_t) + size);
+		r[0] = 1;
+		return &r[1];
+	}else{
+		size_t old = array_length(data);
+		size_t* r = (size_t*)malloc(sizeof(size_t) + (size * (old + 1)));
+		r[0] = old + 1;
+		memcpy(&r[1], data, size * old);
+		free(data);
+		return &r[1];
+	}
+}
+
+void* array_delete_body(void* data, size_t size, int index){
+	size_t incr = 0;
+	int i;
+	int max;
+	void* r;
+	unsigned char* start;
+	if(data == NULL) return NULL;
+	if((max = array_length(data)) <= index) return data;
+
+	r = malloc(sizeof(size_t) + (size * (max - 1)));
+
+	start = (unsigned char*)(&((size_t*)r)[1]);
+
+	for(i = 0; i < max; i++){
+		if(i != index){
+			memcpy(start + incr, ((unsigned char*)data) + i * size, size);
+			incr += size;
+		}
+	}
+
+	((size_t*)r)[0] = max - 1;
+
+	free(&((size_t*)data)[-1]);
+
+	return &((size_t*)r)[1];
+}
+
+void array_free_body(void* data){
+	if(data == NULL) return;
+	free(&((size_t*)data)[-1]);
+}
+
+size_t array_length(void* data){
+	if(data == NULL) return 0;
+	return ((size_t*)data)[-1];
+}

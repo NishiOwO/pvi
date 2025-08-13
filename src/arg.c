@@ -30,11 +30,14 @@
 
 #include "common.h"
 
+char** files = NULL;
+
 int arg_parse(int argc, char** argv){
 	int i;
 	for(i = 1; i < argc; i++){
 		if(argv[i][0] == '-'){
 		}else{
+			array_put(files, argv[i]);
 		}
 	}
 	return -1;
