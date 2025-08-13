@@ -39,7 +39,7 @@
 #include <stdarg.h>
 #include <stddef.h>
 
-#define VERSION "0.0.0"
+#define VERSION "0.0"
 
 #define not_supported(argv,arg) fprintf(stderr,"%s: not supported: %s\n", argv[0], arg);return 1;
 

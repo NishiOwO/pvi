@@ -10,7 +10,7 @@ EXEC =
 
 OBJS = src/main.o src/arg.o src/array.o
 
-.PHONY: all pcre clean mrproper
+.PHONY: all docs pcre clean mrproper
 .SUFFIXES: .c .o
 
 all: pvi$(EXEC)
@@ -23,6 +23,9 @@ pvi$(EXEC): $(OBJS)
 
 pcre:
 	cd pcre && $(MAKE)
+
+docs:
+	cd docs && $(MAKE)
 
 clean:
 	rm -f pvi.exe pvi src/*.o
