@@ -1,5 +1,5 @@
 dnl $Id$
-include(`nicestuff.m4')dnl
+include(`m4/macro.m4')dnl
 This is version VERSION of the pvi, POSIX vi editor.
 Conditional compilation flags:
 DOC_INDENT2(8, 16, [-DDEBUG], [for debugging])
