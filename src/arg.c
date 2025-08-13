@@ -36,6 +36,10 @@ int arg_parse(int argc, char** argv){
 	int i;
 	for(i = 1; i < argc; i++){
 		if(argv[i][0] == '-'){
+			if(strcmp(argv[i], "-V") == 0 || strcmp(argv[i], "--version") == 0){
+				printf("pvi %s\n", VERSION);
+				return 0;
+			}
 		}else{
 			array_put(files, argv[i]);
 		}

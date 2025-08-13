@@ -39,6 +39,8 @@
 #include <stdarg.h>
 #include <stddef.h>
 
+#define VERSION "0.0.0"
+
 /* arg.c */
 int arg_parse(int argc, char** argv);
 
