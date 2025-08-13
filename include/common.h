@@ -41,6 +41,8 @@
 
 #define VERSION "0.0.0"
 
+#define not_supported(argv,arg) fprintf(stderr,"%s: not supported: %s\n", argv[0], arg);return 1;
+
 /* arg.c */
 int arg_parse(int argc, char** argv);
 
