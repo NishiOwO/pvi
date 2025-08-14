@@ -115,8 +115,14 @@ if(check_header("termcap.h")){
 	if(check_library("tgetent", "termcap")){
 	}elsif(check_library("tgetent", "ncurses")){
 	}elsif(check_library("tgetent", "curses")){
+	}else{
+		print("Can't find termcap library\n");
+		exit(1);
 	}
 }elsif(check_header("windows.h")){
+}else{
+	print("Can't select terminal library\n");
+	exit(1);
 }
 check_header("stdint.h");
 
