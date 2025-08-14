@@ -26,6 +26,18 @@ sub test_program {
 	return $status == 0;
 }
 
+sub check_header {
+	my $ret = 1;
+	print("Does $_[0] exist? ");
+	if(test_program("#include <$_[0]>\n")){
+		print("yes\n");
+	}else{
+		print("no\n");
+		$ret = 0;
+	}
+	return $ret;
+}
+
 my @compilers = ("clang", "gcc", "cc");
 
 if(defined($ENV{"CC"})){
@@ -58,3 +70,6 @@ if(!test_program("#ifdef __clang__\nthis should fail\n#endif\n")){
 	print("Contact maintainer or send patches\n");
 	exit(1);
 }
+
+check_header("termios.h");
+check_header("stdint.h");
