@@ -83,6 +83,32 @@ sub check_library {
 	return $ret;
 }
 
+print("Diagnose " . '$Id$' . "\n");
+
+foreach my $arg (@ARGV){
+	if($arg =~ /^([^\=]+)=(.*)$/){
+		$ENV{$1} = $2;
+	}elsif($arg =~ /^-(.+)$/){
+		if(($1 eq '-help') || ($1 eq 'h')){
+			print("Usage: ./diagnose [flags] [options]\n");
+			print("\n");
+			print("Flags:\n");
+			print("  -h   --help  Shows this help message\n");
+			print("\n");
+			print("Options:\n");
+			print("  CC           C compiler\n");
+			print("  CFLAGS       C compiler flags\n");
+			print("  LDFLAGS      C linker flags\n");
+			print("  LIBS         C libraries\n");
+			print("  AR           Archiver\n");
+	 		exit(0);
+		}else{
+			print STDERR ("Unknown flag: -$1\n");
+			exit(1);
+		}
+	}
+}
+
 if(defined($ENV{"CFLAGS"})){
 	$diag_cflags = $ENV{"CFLAGS"};
 }
@@ -98,8 +124,6 @@ if(defined($ENV{"CC"})){
 	push(@compilers, $ENV{"CC"});
 	@compilers = reverse(@compilers);
 }
-
-print("Diagnose " . '$Id$' . "\n");
 
 print("What compiler do you have? ");
 foreach my $cc (@compilers){
