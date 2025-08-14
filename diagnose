@@ -65,7 +65,7 @@ sub check_header {
 sub check_library {
 	my $ret = 1;
 	print("Does $_[0] exist in library $_[1]? ");
-	if(test_program("extern void* $_[0];\nint main(){}\n", "-l$_[1]")){
+	if(test_program("extern void* $_[0];\nint main(){void* ref_$_[0] = $_[0];}\n", "-l$_[1]")){
 		print("yes\n");
 		$diag_libs = $diag_libs . " -l$_[1]";
 	}else{
@@ -111,7 +111,7 @@ if(!test_program("#ifdef __clang__\nthis should fail\n#endif\nint main(){}\n")){
 }
 
 check_header("termios.h");
-if(check_header("termcap.h")){
+if(check_header("termcap.h") || check_header("term.h")){
 	if(check_library("tgetent", "termcap")){
 	}elsif(check_library("tgetent", "ncurses")){
 	}elsif(check_library("tgetent", "curses")){
