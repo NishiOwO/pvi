@@ -1,3 +1,4 @@
 /pcre/include/*.h linguist-generated
 /pcre/src/*.h linguist-generated
 /pcre/src/*.c linguist-generated
+/ref/termcap.src linguist-generated
