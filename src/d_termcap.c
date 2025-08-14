@@ -41,4 +41,20 @@
 #include "common.h"
 
 #if HAVE_TERMCAP_H || HAVE_TERM_H
+int term_init(void){
+	char buf[1024];
+	char* term;
+	int st;
+	if((term = getenv("TERM")) == NULL){
+		fprintf(stderr, "TERM not set\n");
+		return 1;
+	}
+	if((st = tgetent(buf, term)) != 1){
+		if(st == -1) fprintf(stderr, "termcap: database could not be opened\n");
+		if(st == 0) fprintf(stderr, "termcap: could not find the entry\n");
+		return 1;
+	}
+
+	return -1;
+}
 #endif

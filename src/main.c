@@ -41,15 +41,7 @@
 #include "common.h"
 
 int main(int argc, char** argv){
-	int st = arg_parse(argc, argv);
-	if(st != -1) return st;
-	debug_init();
-#ifdef DEBUG
-	{
-		char* home = get_home();
-		if(home != NULL){
-			debug_printf("Home directory is %s\n", home);
-		}
-	}
-#endif
+	int st;
+	if((st = arg_parse(argc, argv)) != -1) return st;
+	if((st = term_init()) != -1) return st;
 }

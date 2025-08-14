@@ -80,4 +80,7 @@ extern FILE* debug_output;
 char* alloc_str(const char* str);
 char* get_home(void);
 
+/* d_<driver>.c */
+int term_init(void);
+
 #endif
