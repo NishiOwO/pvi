@@ -9,6 +9,7 @@ LIBS = -lpcre
 EXEC =
 
 OBJS = src/main.o src/arg.o src/array.o src/util.o
+OBJS += src/d_termcap.o src/d_windows.o
 
 .PHONY: all fail docs pcre clean mrproper
 .SUFFIXES: .c .o
