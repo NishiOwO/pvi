@@ -40,6 +40,10 @@
 
 #include "common.h"
 
+#ifdef DEBUG
+FILE* debug_output = NULL;
+#endif
+
 char* alloc_str(const char* str){
 	char* s = malloc(strlen(str) + 1);
 	strcpy(s, str);

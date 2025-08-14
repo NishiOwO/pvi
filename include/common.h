@@ -53,9 +53,11 @@
 
 #define not_supported(argv,arg) fprintf(stderr,"%s: not supported: %s\n", argv[0], arg);return 1;
 #ifdef DEBUG
-#define debug_printf(...) fprintf(stderr, "[DEBUG] " __VA_ARGS__)
+#define debug_printf(...) fprintf(debug_output, "[DEBUG] " __VA_ARGS__)
+#define debug_init() debug_output = fopen("debug.log", "wb");
 #else
 #define debug_printf(...)
+#define debug_init()
 #endif
 
 /* arg.c */
@@ -72,6 +74,9 @@ void* array_delete_body(void* data, size_t size, int index);
 #define array_delete(arr,elem) {(arr) = array_delete_body((arr), sizeof(*(arr)), (elem));}
 
 /* util.c */
+#ifdef DEBUG
+extern FILE* debug_output;
+#endif
 char* alloc_str(const char* str);
 char* get_home(void);
 

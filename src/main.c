@@ -43,6 +43,7 @@
 int main(int argc, char** argv){
 	int st = arg_parse(argc, argv);
 	if(st != -1) return st;
+	debug_init();
 #ifdef DEBUG
 	{
 		char* home = get_home();
