@@ -1,2 +1,4 @@
 #!/usr/bin/env perl
 # $Id$
+
+print("Diagnose " . '$Id$' . "\n");
