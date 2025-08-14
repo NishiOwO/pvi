@@ -32,9 +32,9 @@ sub test_program {
 		$add_cflags = "-c";
 	}
 
-	open(IN, ">", "test.c");
-	print IN ("$_[0]");
-	close(IN);
+	open(OUT, ">", "test.c");
+	print OUT ("$_[0]");
+	close(OUT);
 	my $out = `$diag_cc $diag_cflags $add_cflags -o test$o test.c $_[1] 2>&1`;
 	my $status = $?;
 
@@ -126,6 +126,9 @@ if(check_header("termcap.h") || check_header("term.h")){
 }
 check_header("stdint.h");
 
-print("CFLAGS += $diag_cflags\n");
-print("LDFLAGS += $diag_ldflags\n");
-print("LIBS += $diag_libs\n");
+open(OUT, ">", "diagnose.mk");
+print OUT ("CC = $diag_cc\n");
+print OUT ("CFLAGS += -DDIAGNOSED=1 $diag_cflags\n");
+print OUT ("LDFLAGS += $diag_ldflags\n");
+print OUT ("LIBS += $diag_libs\n");
+close(OUT);

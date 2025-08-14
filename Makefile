@@ -34,3 +34,4 @@ clean:
 
 mrproper: clean
 	cd pcre && $(MAKE) clean
+	rm -f diagnose.mk

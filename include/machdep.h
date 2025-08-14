@@ -32,12 +32,14 @@
 #define __MACHDEP_H__
 
 /*** platform definitions ***/
+#if !DIAGNOSED
 #if defined(__NetBSD__) || defined(__OpenBSD__) || defined(__FreeBSD__) || defined(__linux__)
 #define HAVE_TERMIOS_H 1
 #endif
 
 #if __STDC_VERSION__ >= 199901L
 #define HAVE_STDINT_H 1
+#endif
 #endif
 
 /*** includes ***/
