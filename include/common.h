@@ -82,5 +82,6 @@ char* get_home(void);
 
 /* d_<driver>.c */
 int term_init(void);
+void term_close(void);
 
 #endif

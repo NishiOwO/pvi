@@ -41,20 +41,38 @@
 #include "common.h"
 
 #if HAVE_TERMCAP_H || HAVE_TERM_H
+static char bp[1024];
+static char ap[30];
+
+static void tcputs(const char* cap){
+	char* str = tgetstr(cap, (char**)&ap);
+	if(str != NULL){
+		fputs(str, stdout);
+		fflush(stdout);
+	}
+}
+
 int term_init(void){
-	char buf[1024];
 	char* term;
 	int st;
 	if((term = getenv("TERM")) == NULL){
 		fprintf(stderr, "TERM not set\n");
 		return 1;
 	}
-	if((st = tgetent(buf, term)) != 1){
+	if((st = tgetent(bp, term)) != 1){
 		if(st == -1) fprintf(stderr, "termcap: database could not be opened\n");
 		if(st == 0) fprintf(stderr, "termcap: could not find the entry\n");
 		return 1;
 	}
 
+	tcputs("ti");
+	tcputs("ra");
+
 	return -1;
+}
+
+void term_close(void){
+	tcputs("sa");
+	tcputs("te");
 }
 #endif

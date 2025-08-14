@@ -44,4 +44,5 @@ int main(int argc, char** argv){
 	int st;
 	if((st = arg_parse(argc, argv)) != -1) return st;
 	if((st = term_init()) != -1) return st;
+	term_close();
 }
