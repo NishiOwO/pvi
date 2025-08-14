@@ -11,6 +11,8 @@ my $diag_cflags = "";
 my $diag_ldflags = "";
 my $diag_libs = "";
 
+my $diag_config = "";
+
 my $flags = "";
 
 sub path_find {
@@ -51,17 +53,20 @@ sub test_program {
 
 sub check_header {
 	my $ret = 1;
+	my $def = "";
 	my $flag = "have." . $_[0];
 	$flag =~ s/\./_/g;
 	$flag = uc($flag);
+	$def = "#define $flag 1";
 	print("Does $_[0] exist? ");
 	if(test_program("#include <$_[0]>\nint main(){}\n")){
 		print("yes\n");
 	}else{
 		print("no\n");
 		$ret = 0;
+		$def = "/* #undef $flag */";
 	}
-	$diag_cflags = $diag_cflags . " -D$flag=$ret";
+	$diag_config = $diag_config . "/* Define to 1 if you have the <$_[0]> header file. */\n$def\n\n";
 	return $ret;
 }
 
@@ -163,5 +168,14 @@ print OUT ("LIBS += $diag_libs\n");
 print OUT ("EXEC = $diag_exec\n");
 print OUT ("all: \$(TARGET)\n");
 close(OUT);
-
 print("Wrote diagnose.mk\n");
+
+open(OUT, ">", "config.h");
+print OUT ("#ifndef __CONFIG_H__\n");
+print OUT ("#define __CONFIG_H__\n");
+print OUT ("\n");
+print OUT ("$diag_config");
+print OUT ("\n");
+print OUT ("#endif\n");
+close(OUT);
+print("Wrote config.h\n");

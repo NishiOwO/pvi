@@ -31,6 +31,8 @@
 #ifndef __MACHDEP_H__
 #define __MACHDEP_H__
 
+#include "../config.h"
+
 /*** includes ***/
 #if HAVE_TERMIOS_H
 #include <termios.h>

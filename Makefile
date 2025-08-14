@@ -8,7 +8,7 @@ LIBS = -lpcre
 
 EXEC =
 
-OBJS = src/main.o src/arg.o src/array.o
+OBJS = src/main.o src/arg.o src/array.o src/util.o
 
 .PHONY: all fail docs pcre clean mrproper
 .SUFFIXES: .c .o
@@ -38,4 +38,4 @@ clean:
 
 mrproper: clean
 	cd pcre && $(MAKE) clean
-	rm -f diagnose.mk
+	rm -f diagnose.mk config.h
