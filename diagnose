@@ -207,10 +207,14 @@ my @dir = readdir(D);
 closedir(D);
 
 foreach my $dirname (@dir){
-	if(($dirname eq ".") || ($dirname eq "..")){
+	if(!($dirname =~ /\.c$/)){
 		next;
 	}
-	print OUT ("src/$dirname: include/common.h include/machdep.h config.h\n");
+	my $objname = $dirname;
+
+	$objname =~ s/\.c$/.o/;
+
+	print OUT ("src/$objname: src/$dirname include/common.h include/machdep.h config.h\n");
 }
 
 close(OUT);

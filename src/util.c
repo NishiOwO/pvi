@@ -40,8 +40,23 @@
 
 #include "common.h"
 
+char* alloc_str(const char* str){
+	char* s = malloc(strlen(str) + 1);
+	strcpy(s, str);
+	return s;
+}
+
 #if HAVE_PWD_H && HAVE_UNISTD_H
+/**
+ * If <pwd.h> and <unistd.h> are present, use home directory from password file
+ */
 char* get_home(void){
-	return NULL;
+	struct passwd* pwd = getpwuid(getuid());
+	char* home = NULL;
+	if(pwd == NULL) return NULL;
+
+	home = alloc_str(pwd->pw_dir);
+
+	return home;
 }
 #endif

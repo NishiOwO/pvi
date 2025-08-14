@@ -43,4 +43,12 @@
 int main(int argc, char** argv){
 	int st = arg_parse(argc, argv);
 	if(st != -1) return st;
+#ifdef DEBUG
+	{
+		char* home = get_home();
+		if(home != NULL){
+			debug_printf("Home directory is %s\n", home);
+		}
+	}
+#endif
 }
