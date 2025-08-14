@@ -135,7 +135,7 @@ if(!test_program("#ifdef __clang__\nthis should fail\n#endif\nint main(){}\n")){
 }elsif(!test_program("#ifdef __WATCOMC__\nthis should fail\n#endif\nint main(){}\n")){
 	print("Watcom\n");
 }elsif(!test_program("#ifdef __USLC__\nthis should fail\n#endif\nint main(){}\n")){
-	print("UDK??\n");
+	print("UnixWare / OpenServer Development Kit\n");
 }else{
 	print("Unknown\n");
 	print("This compiler is not supported yet\n");
