@@ -150,6 +150,8 @@ if(check_header("termcap.h") || check_header("term.h")){
 	print("Can't select terminal library\n");
 	exit(1);
 }
+check_header("pwd.h");
+check_header("unistd.h");
 check_header("stdint.h");
 
 open(OUT, ">", "diagnose.mk");
@@ -161,3 +163,5 @@ print OUT ("LIBS += $diag_libs\n");
 print OUT ("EXEC = $diag_exec\n");
 print OUT ("all: \$(TARGET)\n");
 close(OUT);
+
+print("Wrote diagnose.mk\n");

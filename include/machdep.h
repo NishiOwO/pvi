@@ -52,6 +52,14 @@
 #include <windows.h>
 #endif
 
+#if HAVE_PWD_H
+#include <pwd.h>
+#endif
+
+#if HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 /*** misc ***/
 #if HAVE_STDINT_H
 typedef int8_t i8;
