@@ -2,3 +2,4 @@
 /pcre/src/*.h linguist-generated
 /pcre/src/*.c linguist-generated
 /ref/termcap.src linguist-generated
+/ref/terminfo.txt linguist-generated
