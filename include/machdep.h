@@ -51,6 +51,18 @@
 #include <stdint.h>
 #endif
 
+#if HAVE_TERMCAP_H
+#include <termcap.h>
+#endif
+
+#if HAVE_TERM_H
+#include <term.h>
+#endif
+
+#if HAVE_WINDOWS_H
+#include <windows.h>
+#endif
+
 /*** misc ***/
 #if HAVE_STDINT_H
 typedef int8_t i8;
