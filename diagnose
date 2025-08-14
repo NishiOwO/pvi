@@ -1,8 +1,11 @@
 #!/usr/bin/env perl
-# $Id$
+# $Id$$
 
 my @compilers = ("clang", "gcc", "cc");
+my @archivers = ("gar", "ar");
 
+my $diag_exec = "";
+my $diag_ar = "";
 my $diag_cc = "";
 my $diag_cflags = "";
 my $diag_ldflags = "";
@@ -79,6 +82,12 @@ if(defined($ENV{"CFLAGS"})){
 	$diag_cflags = $ENV{"CFLAGS"};
 }
 
+if(defined($ENV{"AR"})){
+	@archivers = reverse(@archivers);
+	push(@archivers, $ENV{"AR"});
+	@archivers = reverse(@archivers);
+}
+
 if(defined($ENV{"CC"})){
 	@compilers = reverse(@compilers);
 	push(@compilers, $ENV{"CC"});
@@ -94,6 +103,23 @@ foreach my $cc (@compilers){
 		$diag_cc = $cc;
 		last;
 	}
+}
+
+print("What archiver do you have? ");
+foreach my $ar (@archivers){
+	if(path_find($ar)){
+		print("$ar\n");
+		$diag_ar = $ar;
+		last;
+	}
+}
+
+print("Are we compiling for Windows? ");
+if(!test_program("#ifdef _WIN32\nthis should fail\n#endif\nint main(){}\n")){
+	print("yes\n");
+	$diag_exec = ".exe";
+}else{
+	print("no\n");
 }
 
 print("What compiler is this? ");
@@ -128,7 +154,9 @@ check_header("stdint.h");
 
 open(OUT, ">", "diagnose.mk");
 print OUT ("CC = $diag_cc\n");
+print OUT ("AR = $diag_ar\n");
 print OUT ("CFLAGS += -DDIAGNOSED=1 $diag_cflags\n");
 print OUT ("LDFLAGS += $diag_ldflags\n");
 print OUT ("LIBS += $diag_libs\n");
+print OUT ("EXEC = $diag_exec\n");
 close(OUT);
