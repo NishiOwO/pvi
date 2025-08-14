@@ -10,6 +10,8 @@ EXEC =
 
 OBJS = src/main.o src/arg.o src/array.o
 
+-include diagnose.mk
+
 .PHONY: all docs pcre clean mrproper
 .SUFFIXES: .c .o
 
