@@ -125,6 +125,14 @@ if(!test_program("#ifdef _WIN32\nthis should fail\n#endif\nint main(){}\n")){
 	$diag_exec = ".exe";
 }else{
 	print("no\n");
+
+	print("Are we compiling for Linux? ");
+	if(!test_program("#ifdef __linux__\nthis should fail\n#endif\nint main(){}\n")){
+		print("yes\n");
+		$diag_cflags = $diag_cflags . " -D_DEFAULT_SOURCE=1";
+	}else{
+		print("no\n");
+	}
 }
 
 print("What compiler is this? ");
