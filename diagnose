@@ -52,4 +52,9 @@ if(!test_program("#ifdef __clang__\nthis should fail\n#endif\n")){
 	print("GCC\n");
 }elsif(!test_program("#ifdef __USLC__\nthis should fail\n#endif\n")){
 	print("UDK??\n");
+}else{
+	print("Unknown\n");
+	print("This compiler is not supported yet\n");
+	print("Contact maintainer or send patches\n");
+	exit(1);
 }
