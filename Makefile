@@ -1,7 +1,7 @@
 # $Id$
 
-include mk/config.mk
-
+CC = cc
+AR = ar
 CFLAGS = -I include
 LDFLAGS = -L pcre
 LIBS = -lpcre
@@ -38,3 +38,5 @@ clean:
 mrproper: clean
 	cd pcre && $(MAKE) clean
 	rm -f diagnose.mk config.h
+
+include mk/depend.mk

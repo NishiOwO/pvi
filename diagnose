@@ -201,22 +201,6 @@ print OUT ("LDFLAGS += $diag_ldflags\n");
 print OUT ("LIBS += $diag_libs\n");
 print OUT ("EXEC = $diag_exec\n");
 print OUT ("all: \$(TARGET)\n");
-
-opendir(D, "src");
-my @dir = readdir(D);
-closedir(D);
-
-foreach my $dirname (@dir){
-	if(!($dirname =~ /\.c$/)){
-		next;
-	}
-	my $objname = $dirname;
-
-	$objname =~ s/\.c$/.o/;
-
-	print OUT ("src/$objname: src/$dirname include/common.h include/machdep.h config.h\n");
-}
-
 close(OUT);
 print("Wrote diagnose.mk\n");
 
