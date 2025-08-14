@@ -4,12 +4,26 @@ if(@ARGV < 1){
 	die;
 }
 
+my $licwidth = 76;
+
 my $lic = "";
-open(LIC, "<", "LICENSE") or die;
-while(<LIC>){
-	$lic = $lic . " * " . $_;
+open(IN, "<", "LICENSE") or die;
+while(<IN>){
+	my $l = $_;
+	$l =~ s/\r?\n$//g;
+	$lic = $lic . " * " . $l . (" " x ($licwidth - length($l) - 2)) . "*\n";
 }
-close(LIC);
+close(IN);
+
+my $contact = "";
+
+open(IN, "<", "CONTACT") or die;
+while(<IN>){
+	my $l = $_;
+	$l =~ s/\r?\n$//g;
+	$contact = $contact . " * " . $l . (" " x ($licwidth - length($l) - 2)) . "*\n";
+}
+close(IN);
 
 foreach my $f (@ARGV){
 	my $inlic = 0;
@@ -18,10 +32,14 @@ foreach my $f (@ARGV){
 	while(<IN>){
 		my $l = $_;
 		$l =~ s/\r?\n$//g;
-		if($l eq "/*-"){
+		if(($l eq "/*-") || ($l =~ /\/\*{3,}/)){
 			$inlic = 1;
-			$t = $t . "/*-\n" . $lic . " */\n";
-		}elsif($l eq " */"){
+			$t = $t . "/*" . ("*" x $licwidth) . "\n";
+			$t = $t . $lic;
+			$t = $t . " *" . ("*" x $licwidth) . "\n";
+			$t = $t . $contact;
+			$t = $t . " *" . ("*" x $licwidth) . "/\n";
+		}elsif($inlic && (($l eq " */") || ($l =~ / \*{3,}\//))){
 			$inlic = 0;
 		}elsif(!$inlic){
 			$t = $t . $l . "\n";

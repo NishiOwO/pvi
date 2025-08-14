@@ -40,30 +40,8 @@
 
 #include "common.h"
 
-char** files = NULL;
-
-int arg_parse(int argc, char** argv){
-	int i;
-	for(i = 1; i < argc; i++){
-		if(argv[i][0] == '-'){
-			if(strcmp(argv[i], "-V") == 0 || strcmp(argv[i], "--version") == 0){
-				printf("pvi %s\n", VERSION);
-				return 0;
-			}else if(strcmp(argv[i], "-r") == 0){
-				/* recover */
-				not_supported(argv,argv[i]);
-			}else if(strcmp(argv[i], "-R") == 0){
-				/* readonly */
-			}else if(strcmp(argv[i], "-t") == 0){
-				/* ctags */
-				not_supported(argv,argv[i]);
-			}else if(strcmp(argv[i], "-w") == 0){
-				/* window */
-				not_supported(argv,argv[i]);
-			}
-		}else{
-			array_put(files, argv[i]);
-		}
-	}
-	return -1;
+#if HAVE_PWD_H && HAVE_UNISTD_H
+char* get_home(void){
+	return NULL;
 }
+#endif
