@@ -1,4 +1,55 @@
 #!/usr/bin/env perl
 # $Id$
 
+my $diag_cc = "";
+
+sub path_find {
+	my @pathlist = split(/:/, $ENV{"PATH"});
+	foreach my $path (@pathlist){
+		if(-f $path . "/" . $_[0]){
+			return 1;
+		}
+	}
+	return 0;
+}
+
+sub test_program {
+	open(IN, ">", "test.c");
+	print IN "$_[0]";
+	close(IN);
+	my $out = `$diag_cc -c -o test.o test.c 2>&1`;
+	my $status = $?;
+
+	unlink("test.c");
+	unlink("test.o");
+
+	return $status == 0;
+}
+
+my @compilers = ("clang", "gcc", "cc");
+
+if(defined($ENV{"CC"})){
+	@compilers = reverse(@compilers);
+	push(@compilers, $ENV{"CC"});
+	@compilers = reverse(@compilers);
+}
+
 print("Diagnose " . '$Id$' . "\n");
+
+print("What compiler do you have? ");
+foreach my $cc (@compilers){
+	if(path_find($cc)){
+		print("$cc\n");
+		$diag_cc = $cc;
+		last;
+	}
+}
+
+print("What compiler is this? ");
+if(!test_program("#ifdef __clang__\nthis should fail\n#endif\n")){
+	print("Clang\n");
+}elsif(!test_program("#ifdef __GNUC__\nthis should fail\n#endif\n")){
+	print("GCC\n");
+}elsif(!test_program("#ifdef __USLC__\nthis should fail\n#endif\n")){
+	print("UDK??\n");
+}
