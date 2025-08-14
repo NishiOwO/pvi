@@ -1,4 +1,5 @@
 #!/bin/sh
+# $Id$
 make mrproper
 
 rm -f *.tar.gz
