@@ -33,7 +33,7 @@ docs:
 	cd docs && $(MAKE)
 
 clean:
-	rm -f pvi.exe pvi src/*.o
+	rm -f pvi.exe pvi src/*.o *.core *.log
 
 mrproper: clean
 	cd pcre && $(MAKE) clean
