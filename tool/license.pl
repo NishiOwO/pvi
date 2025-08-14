@@ -32,14 +32,14 @@ foreach my $f (@ARGV){
 	while(<IN>){
 		my $l = $_;
 		$l =~ s/\r?\n$//g;
-		if(($l eq "/*-") || ($l =~ /\/\*{3,}/)){
+		if(($l eq "/*-") || ($l =~ /\/\*{40,}/)){
 			$inlic = 1;
 			$t = $t . "/*" . ("*" x $licwidth) . "\n";
 			$t = $t . $lic;
 			$t = $t . " *" . ("*" x $licwidth) . "\n";
 			$t = $t . $contact;
 			$t = $t . " *" . ("*" x $licwidth) . "/\n";
-		}elsif($inlic && (($l eq " */") || ($l =~ / \*{3,}\//))){
+		}elsif($inlic && (($l eq " */") || ($l =~ / \*{40,}\//))){
 			$inlic = 0;
 		}elsif(!$inlic){
 			$t = $t . $l . "\n";
