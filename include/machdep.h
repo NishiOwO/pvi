@@ -72,6 +72,10 @@
 #include <unistd.h>
 #endif
 
+#if HAVE_SYS_IOCTL_H
+#include <sys/ioctl.h>
+#endif
+
 /*** misc ***/
 #if HAVE_STDINT_H
 typedef int8_t i8;

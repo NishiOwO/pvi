@@ -52,6 +52,8 @@ static void tcputs(const char* cap){
 	}
 }
 
+
+
 int term_init(void){
 	char* term;
 	int st;
@@ -65,8 +67,14 @@ int term_init(void){
 		return 1;
 	}
 
+	if(tgetstr("cm", (char**)&ap) == NULL){
+		fprintf(stderr, "cursor_address capability is required\n");
+		return 1;
+	}
+
 	tcputs("ti");
 	tcputs("ra");
+	tcputs("cl");
 
 	return -1;
 }

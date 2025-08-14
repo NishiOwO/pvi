@@ -55,7 +55,7 @@ sub check_header {
 	my $ret = 1;
 	my $def = "";
 	my $flag = "have." . $_[0];
-	$flag =~ s/\./_/g;
+	$flag =~ s/[\.\/]/_/g;
 	$flag = uc($flag);
 	$def = "#define $flag 1";
 	print("Does $_[0] exist? ");
@@ -200,6 +200,7 @@ if(check_header("termcap.h") || check_header("term.h")){
 check_header("pwd.h");
 check_header("unistd.h");
 check_header("stdint.h");
+check_header("sys/ioctl.h");
 
 open(OUT, ">", "diagnose.mk");
 print OUT ("CC = $diag_cc\n");
