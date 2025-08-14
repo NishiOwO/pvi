@@ -16,8 +16,10 @@ OBJS = src/main.o src/arg.o src/array.o
 TARGET = pvi$(EXEC)
 -include diagnose.mk
 fail:
-	@echo "Please run ./diagnose"
-	@exit 1
+	@./diagnose
+	@echo "Please run $(MAKE) again"
+	@$(MAKE) pcre
+	@$(MAKE) all
 
 pvi$(EXEC): $(OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBS)
