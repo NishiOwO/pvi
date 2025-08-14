@@ -132,6 +132,8 @@ if(!test_program("#ifdef __clang__\nthis should fail\n#endif\nint main(){}\n")){
 	print("Clang\n");
 }elsif(!test_program("#ifdef __GNUC__\nthis should fail\n#endif\nint main(){}\n")){
 	print("GCC\n");
+}elsif(!test_program("#ifdef __WATCOMC__\nthis should fail\n#endif\nint main(){}\n")){
+	print("Watcom\n");
 }elsif(!test_program("#ifdef __USLC__\nthis should fail\n#endif\nint main(){}\n")){
 	print("UDK??\n");
 }else{

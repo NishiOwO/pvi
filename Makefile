@@ -17,7 +17,6 @@ TARGET = pvi$(EXEC)
 -include diagnose.mk
 fail:
 	@./diagnose
-	@echo "Please run $(MAKE) again"
 	@$(MAKE) pcre
 	@$(MAKE) all
 
