@@ -1,5 +1,5 @@
 #!/usr/bin/env perl
-# $Id$$
+# $Id$
 
 my @compilers = ("clang", "gcc", "cc");
 my @archivers = ("gar", "ar");
