@@ -113,6 +113,10 @@ if(defined($ENV{"CFLAGS"})){
 	$diag_cflags = $ENV{"CFLAGS"};
 }
 
+if(defined($ENV{"LDFLAGS"})){
+	$diag_ldflags = $ENV{"LDFLAGS"};
+}
+
 if(defined($ENV{"AR"})){
 	@archivers = reverse(@archivers);
 	push(@archivers, $ENV{"AR"});
