@@ -5,6 +5,8 @@ my @compilers = ("clang", "gcc", "cc");
 
 my $diag_cc = "";
 my $diag_cflags = "";
+my $diag_ldflags = "";
+my $diag_libs = "";
 
 my $flags = "";
 
@@ -22,14 +24,24 @@ sub path_find {
 }
 
 sub test_program {
+	my $o = "";
+	my $add_cflags = "";
+
+	if(!defined($_[1])){
+		$o = ".o";
+		$add_cflags = "-c";
+	}
+
 	open(IN, ">", "test.c");
-	print IN "$_[0]";
+	print IN ("$_[0]");
 	close(IN);
-	my $out = `$diag_cc $diag_cflags -c -o test.o test.c 2>&1`;
+	my $out = `$diag_cc $diag_cflags $add_cflags -o test$o test.c $_[1] 2>&1`;
 	my $status = $?;
 
 	unlink("test.c");
 	unlink("test.o");
+	unlink("test");
+	unlink("test.exe");
 
 	return $status == 0;
 }
@@ -40,13 +52,26 @@ sub check_header {
 	$flag =~ s/\./_/g;
 	$flag = uc($flag);
 	print("Does $_[0] exist? ");
-	if(test_program("#include <$_[0]>\n")){
+	if(test_program("#include <$_[0]>\nint main(){}\n")){
 		print("yes\n");
 	}else{
 		print("no\n");
 		$ret = 0;
 	}
 	$diag_cflags = $diag_cflags . " -D$flag=$ret";
+	return $ret;
+}
+
+sub check_library {
+	my $ret = 1;
+	print("Does $_[0] exist in library $_[1]? ");
+	if(test_program("extern void* $_[0];\nint main(){}\n", "-l$_[1]")){
+		print("yes\n");
+		$diag_libs = $diag_libs . " -l$_[1]";
+	}else{
+		print("no\n");
+		$ret = 0;
+	}
 	return $ret;
 }
 
@@ -72,11 +97,11 @@ foreach my $cc (@compilers){
 }
 
 print("What compiler is this? ");
-if(!test_program("#ifdef __clang__\nthis should fail\n#endif\n")){
+if(!test_program("#ifdef __clang__\nthis should fail\n#endif\nint main(){}\n")){
 	print("Clang\n");
-}elsif(!test_program("#ifdef __GNUC__\nthis should fail\n#endif\n")){
+}elsif(!test_program("#ifdef __GNUC__\nthis should fail\n#endif\nint main(){}\n")){
 	print("GCC\n");
-}elsif(!test_program("#ifdef __USLC__\nthis should fail\n#endif\n")){
+}elsif(!test_program("#ifdef __USLC__\nthis should fail\n#endif\nint main(){}\n")){
 	print("UDK??\n");
 }else{
 	print("Unknown\n");
@@ -87,8 +112,14 @@ if(!test_program("#ifdef __clang__\nthis should fail\n#endif\n")){
 
 check_header("termios.h");
 if(check_header("termcap.h")){
+	if(check_library("tgetent", "termcap")){
+	}elsif(check_library("tgetent", "ncurses")){
+	}elsif(check_library("tgetent", "curses")){
+	}
 }elsif(check_header("windows.h")){
 }
 check_header("stdint.h");
 
-print($diag_cflags . "\n");
+print("CFLAGS += $diag_cflags\n");
+print("LDFLAGS += $diag_ldflags\n");
+print("LIBS += $diag_libs\n");
