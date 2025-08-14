@@ -7,12 +7,11 @@ OBJS = src/pcre_byte_order.o src/pcre_chartables.o src/pcre_compile.o src/pcre_c
 CFLAGS = -I include -DHAVE_CONFIG_H -DPCRE_STATIC
 LDFLAGS =
 
--include ../diagnose.mk
-
 .PHONY: all clean
 .SUFFIXES: .c .o
 
-all: libpcre.a
+TARGET = libpcre.a
+-include ../diagnose.mk
 
 libpcre.a: $(OBJS)
 	$(AR) rcs $@ $(OBJS)
